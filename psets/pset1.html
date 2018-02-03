@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Problem Set 1</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
+</head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">CS 290</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          
+        <li>
+          <a href="/">Home</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/schedule.html">Schedule</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/psets/">Problem sets</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/labs/">Labs</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/syllabus.pdf">Syllabus (pdf)</a>
+        </li>
+          
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://cs.colgate.edu/cs">CS@Colgate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h1 id="problem-set-1">Problem Set 1</h1>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="using-latex">Using LaTeX</h3>
+
+<p>Please write up your answers in LaTeX.  LaTeX is a mark up language that is particularly powerful and flexible when it comes writing math expressions.  (The author of your textbook wrote the textbook using LaTeX and all Computer Science researchers that I know use LaTeX to write their papers.  Its math component is also used on sites like StackOverflow, etc.)</p>
+
+<p>You can install LaTeX on your own machine or, even easier, you can use a free online platform like <a href="https://www.overleaf.com/">Overleaf</a> or <a href="https://www.sharelatex.com/">ShareLatex</a>.</p>
+
+<p>Here is a <a href="https://www.overleaf.com/read/ctzbxmbzkbcj">template</a> for writing problem sets.  (When the link opens, click “create clone”.)</p>
+
+<p><strong>Non LaTeX submissions</strong>: I will also accept work written in some other format (Word doc, by hand, etc), but I will deduct up to 5 points (out of 100) for work submitted in a format other than LaTeX.  This is because I want you to learn LaTeX because (a) it’s practically useful, (b) even if you don’t end up using LaTeX again, it will help you develop the ability to quickly learn a new markup language, a skill you will undoubtedly benefit from in the future.</p>
+
+<h3 id="formatting-guidelines">Formatting Guidelines</h3>
+
+<p>Please adhere to the following <strong>formatting requirements</strong>. These will simplify grading so I can more time giving you feedback and less time searching for your answer.</p>
+<ul>
+  <li>Please complete the problems in the order given.</li>
+  <li>A <em>numbered</em> problem should always start at the top of new page.  It is okay for your answer to span multiple pages, but when you finish a problem, please start the next problem on a new page.</li>
+  <li>Some numbered problems contain many parts (1.1, 1.2, 1.3, etc.), each part typically being a fairly short answer.  Multiple parts can and should appear on the same page.</li>
+</ul>
+
+<p>If you use the provided LaTeX template, these formatting guidelines will be adhered to more or less automatically.</p>
+
+<h3 id="submitting-your-work">Submitting your work</h3>
+
+<p>Upload your answers to <a href="https://gradescope.com/">Gradescope</a>.  (If you hand write any/all of your answers, you will need to scan in each page.  Be sure to leave enough time to do this.)</p>
+
+<p>When you upload to gradescope, be sure to follow the Gradescope instructions closely.  In particular, you are expected to assign labels to the pages of the uploaded PDF indicating which problems are written on each page.</p>
+
+<h3 id="latex-resources">LaTeX Resources</h3>
+
+<p>For this course, you do not need to master all of LaTeX; you only need to become proficient in using the mathematical tools and some basic text formatting (e.g., <code class="highlighter-rouge">\textbf{bold}</code> and <code class="highlighter-rouge">\textbf{italics}</code>).</p>
+
+<ul>
+  <li>A <a href="https://www.overleaf.com/read/ctzbxmbzkbcj">template</a> is provided.</li>
+  <li>A <a href="https://www.sharelatex.com/learn/Mathematical_expressions">guide to math stuff</a>.</li>
+  <li>A series of <a href="https://www.overleaf.com/help/category/video_tutorials">tutorials</a> (focus on the math ones)</li>
+  <li><a href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">LaTeX Quick Reference</a></li>
+  <li><a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX Math Reference</a></li>
+  <li>List of <a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols">LaTeX symbols</a></li>
+  <li>Really cool <a href="http://detexify.kirelabs.org/classify.html">LaTeX symbol finder</a></li>
+  <li>LaTeX <a href="http://truben.no/table/">table editor</a></li>
+  <li>If you want to write a multi-line math expression, use <code class="highlighter-rouge">\begin{align}</code> and <code class="highlighter-rouge">\end{align}</code>.  Some <a href="https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics#align_and_align.2A">documentation online</a>.</li>
+</ul>
+
+<h2 id="problems">Problems</h2>
+
+<p>Write up answers to the following problems.  You can turn them in on pencil and paper.</p>
+
+<h3 id="problem-1-warm-up">Problem 1: Warm up</h3>
+
+<p>1.1. Sets can be defined via <em>enumeration</em> or <em>abstraction</em>.  Let’s define $S$ by enumeration: $S := \{ 1, 2, 3 \}$ and let’s define $T$ by abstraction: $T := \{ (x + 1) \bmod 4: x \in S \}$.  What is $T$?  <em>Enumerate</em> the elements of $T$.</p>
+
+<p>1.2. Let $A := \{ a, b, c \}$. What is $\mathcal{P}(A)$, the power set of $A$?</p>
+
+<p>1.3. Let $bitstrs := \{ 0, 1 \}^3$.  What are the elements of $bitstr$?</p>
+
+<!-- 1.4. Suppose $F$ is a set of sets, where each subset is a collection of fruits, corresponding to some person's favorite fruits.  For example, suppose Quentin likes apples and bananas, Rodriguez likes apples and pears, and Song likes lemons and strawberries.  In this case, we might define $F$ as:
+
+$$F := \\{ \\{ \text{apple}, \text{banana}\\}, \\{ \text{apple}, \text{pear}\\}, \\{ \text{lemons}, \text{strawberries} \\} \\}$$
+
+Let's define a set $G$ which is similar to $F$ except that to every set in $F$, we add banana if it wasn't already present.  For the above example, $G$ would be
+
+$$F := \\{ \\{ \text{apple}, \text{banana}\\}, \\{ \text{apple}, \text{pear}, \text{banana} \\}, \\{ \text{lemons}, \text{strawberries}, \text{banana} \\} \\}$$
+
+Define $G$ in a general way using *abstraction*.  Your definition for $G$ should be valid for any set $F$ that contains sets of fruits. -->
+
+<h3 id="problem-2-generating-power-sets-through-iteration">Problem 2: Generating power sets through iteration</h3>
+
+<p>2.1.  Let $A$ and $bitstr$ be defined as above.  Show how the elements of $\mathcal{P}(A)$ can be represented by binary sequences of length three.   In other words, describe a function $f$ that is a bijective mapping between the elements of $bitstr$ and $\mathcal{P}$.  Your answer can simply be a list of $x$, $y$ pairs such that $f(x) = y$.  The mapping should make logical sense.</p>
+
+<p><em>Hint</em>: the all zeros bit string should map to the empty set and the all ones bit string should map to the set $A$.  In other words, you should define $f$ such that $f(\langle 0,0,0 \rangle) = \{ \}$ and $f(\langle 1,1,1 \rangle) = \{ a,b,c \}$.</p>
+
+<p>2.2. Generalize your answer to the previous question for any set $S$ of size $n$.  Let $S := \{ s_1, s_2, \dots, s_n \}$.  Describe a <em>bijective</em> function $f$ between $\{ 0, 1\}^n$ and $\mathcal{P}(S)$.  You can use the notation $\langle x_1, x_2, \dots, x_n \rangle$ to refer to an element in $\{ 0, 1 \}^n$ where $x_i$ is either 0 or 1.  You can use $s_j$ to refer to the $j^{th}$ element of $S$.</p>
+
+<h3 id="problem-3-generating-a-powerset-through-recursion">Problem 3: Generating a powerset through recursion</h3>
+
+<!-- We can define functions recursively by defining base cases and recursive cases.  For example, here is a defintion for the factorial function.  Let $f: \mathbf{Z}^{> 0} \rightarrow \mathbf{Z}^{> 0}$ such that
+
+\[
+ f(x) :=
+  \begin{cases}
+   1 & \text{if } x = 1 \\
+   x \cdot f(x-1) & \text{if } x > 1
+  \end{cases}
+\]
+The last part of this problem asks you to define a recursive function. -->
+
+<p>3.1. Suppose $S := \emptyset = \{ \}$.  What is $\mathcal{P}(S)$?  (<em>Hint</em>: It is <strong>not</strong> equal to the empty set.)</p>
+
+<p>3.2. Consider $A := \{ a, b, c \}$.  What is $\mathcal{P}(A - \{ a \})$? (See if you can observe a relationship between $\mathcal{P}(A)$ and $\mathcal{P}(A - \{ a \})$.  The next question asks you to formalize this pattern.)</p>
+
+<p>3.3. Let $S$ denote a set of size at least one and let $x$ an some element in $S$.  Let $T := S - \{ x \}$.  In other words, $T$ is $S$ after removing $x$.  Let $PT$ be a new set which is defined as $PT := \mathcal{P}(T)$, the power set of $T$.  Define $\mathcal{P}(S)$ in terms of $PT$ and $x$.  You may want to use set operations (union, intersection, difference) and <em>set abstraction</em> (see first question).</p>
+
+<h3 id="problem-4-jaccard-distance">Problem 4: Jaccard distance</h3>
+
+<p>4.1. DLN 2.124  (DLN refers to the textbook)</p>
+
+<p>4.2. DLN 2.125</p>
+
+<p>4.3. DLN 2.126</p>
+
+<p>4.4. DLN 2.127</p>
+
+    </div>
+  </div>
+</div>
+<!-- empty footer -->
+<footer class="footer">
+  <div class="container">
+    <p>This site built using
+    <a href="https://jekyllrb.com/">Jekyll</a>,
+    <a href="https://getbootstrap.com/">Bootstrap</a>,
+    and <a href="https://bootswatch.com/">Bootswatch</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

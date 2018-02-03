@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Lab 1: Frequent Itemset Mining</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
+</head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">CS 290</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          
+        <li>
+          <a href="/">Home</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/schedule.html">Schedule</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/psets/">Problem sets</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/labs/">Labs</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/syllabus.pdf">Syllabus (pdf)</a>
+        </li>
+          
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://cs.colgate.edu/cs">CS@Colgate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h1 id="lab-1-frequent-itemset-mining">Lab 1: Frequent Itemset Mining</h1>
+
+<ul>
+  <li>Course: COSC 290 Discrete Structures Spring 2018</li>
+  <li>Instructor: Michael Hay</li>
+  <li>Assignment: Lab 1</li>
+  <li>Due: Tue, Feb 13 at 11:59 PM (see instructions about “Submitting your work” below)</li>
+  <li>Starter code: <a href="lab1.zip">lab1.zip</a></li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+
+<p>These instructions are written for lab 1 but will apply to other labs.</p>
+
+<h3 id="set-up-the-coding-environment">Set up the coding environment</h3>
+
+<p>The lab machines are equipped with the software you need.  These instructions assume that you will use a basic text editor to write code and then use the command line to compile and run the code.  However, you can also use an application like IntelliJ that provides an <em>integrated development enviroment</em> (IDE) in which you can edit, compile, and run all in one place.</p>
+
+<p>The labs are written for Java 8 and the lab machines have Java 8 (or a later version) installed.</p>
+
+<p>If you want to work on your own machine, you will need, at the very least, a text editor and Java 8.  <strong>Make sure you have Java 8</strong> and not some older version, otherwise weird errors will ensue.  You can check which version by typing <code class="highlighter-rouge">java -version</code> on the command line.  You should see something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java -version
+java version "1.8.0_112"
+Java(TM) SE Runtime Environment (build 1.8.0_112-b16)
+Java HotSpot(TM) 64-Bit Server VM (build 25.112-b16, mixed mode)
+</code></pre></div></div>
+
+<h3 id="download-starter-code">Download starter code</h3>
+
+<p>Download the starter code (available on the course website).  I suggest making a directory on your Desktop called <code class="highlighter-rouge">cosc290</code>.  Open the .zip file and it should create a lab1 sub directory for you.</p>
+
+<h3 id="working-on-the-assignment-editing-compiling-and-running">Working on the assignment: editing, compiling and running</h3>
+
+<p><strong>Editing your code</strong>  You can use any editor you want.  These computers have editors specifically designed for code such as IntelliJ, JEdit, JGrasp, Geany.  They also have a general-purpose text editor called Atom.  The rest of the instructions assume you are using Atom.</p>
+
+<p><strong>Compiling your code</strong> To run your code, you can either use a tool like JEdit which has menu commands to Build and Run the code.  Or you can use the command line!  I encourage this approach as it is worthwhile gaining some comfort familiarity with the command line.</p>
+
+<p>To use the command line, open up the Terminal application.  This will give you a prompt.  There are three useful commands (among many <a href="http://mally.stanford.edu/~sr/computing/basic-unix.html">others</a>):</p>
+
+<p>This command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pwd
+</code></pre></div></div>
+
+<p>will tell you in which directory you are currently located.  This command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls
+</code></pre></div></div>
+
+<p>will list the contents of the current directory.  This command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /Users/mhay/Desktop/cosc290/lab1/
+</code></pre></div></div>
+
+<p>will change the current directory to the directory specified by the path, which in this case is <code class="highlighter-rouge">/Users/mhay/Desktop/cosc290/lab1/</code> (but you will obviously want to specify a different path as <code class="highlighter-rouge">mhay</code> is my username).</p>
+
+<p>Once you have navigated to the directory that contains your code, you can compile your code by typing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac $(find . -name *.java)
+</code></pre></div></div>
+
+<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of the class that contains a <code class="highlighter-rouge">main</code> method.  For lab 1, you can type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java edu.colgate.cosc290.itemsets.Utils
+</code></pre></div></div>
+
+<p>And you should see something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S = [a, b]
+power set of S should be [[], [a], [b], [a, b]]
+Exception in thread "main" java.lang.UnsupportedOperationException: implement me!
+	at edu.colgate.cosc290.itemsets.Utils.allSubsets(Utils.java:20)
+	at edu.colgate.cosc290.itemsets.Utils.main(Utils.java:109)
+</code></pre></div></div>
+
+<h3 id="saving-and-accessing-your-files">Saving and accessing your files</h3>
+
+<p>You can gain access to this room during open lab hours.  However, you are <strong>strongly encouraged to save a copy of your work on Google Drive, Dropbox, etc. so you can easily access it from elsewhere.</strong></p>
+
+<p>It is possible to remotely access your files.  On an Apple computer, you click on the Desktop, then go to the menu bar.  Click <code class="highlighter-rouge">Go -&gt; Connect to server...</code> and type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>smb://username@sarafina.cs.colgate.edu/cosc290/username
+</code></pre></div></div>
+
+<p>where obviously you need to replace <code class="highlighter-rouge">username</code> with your CS account username which is lastname and first initial (e.g., <code class="highlighter-rouge">haym</code>).</p>
+
+<h3 id="submitting-your-work">Submitting your work</h3>
+
+<p>Upload your files to <a href="https://gradescope.com/">Gradescope</a>.  When you do, gradescope is configured to run several tests that were created to check your assignment.  These are <em>not</em> necessarily comprehensive tests of correctness of all methods.  They may instead only check that the code compiles and that the methods can be executed on a simple input without crashing.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Your task is to implement an efficient algorithm for computing frequent itemsets.  Frequent itemset mining is a fundamental data mining task that is broadly applicable – it can be used to improve warehouse inventory management, retail product placement, and product recommendations.</p>
+
+<p>The frequent itemset problem was discussed in class.  Your main task is to implement the algorithm described as “Frequent itemset mining: faster version” in the slides from class.</p>
+
+<p>As an additional reference on frequent itemset mining, you are encouraged to consult this <a href="https://www-users.cs.umn.edu/~kumar001/dmbook/ch6.pdf">chapter from a data mining textbook</a>.  This chapter provides useful background, but also describes several possible implementations of the basic algorithm, some of which are much more complex than what you are expected to implement (e.g., you are not expected to use hash trees to compue itemset support).  You might skim the chapter to glean the following information:</p>
+
+<ul>
+  <li>What is the frequent itemset mining task?</li>
+  <li>What is the “a priori” principle?</li>
+  <li>How is this principle used to generate candidate itemsets?</li>
+  <li>The $F_{k-1} \times F_1$ method for generating candidate itemsets?  (this is the approach you are supposed to implement and mirrors what was presented in class).</li>
+  <li>The running example (particularly Fig. 6.5).</li>
+  <li><strong>Algorithm 6.1</strong>, which appears on p. 337.  Please note, however, that this version of the algorithm is <em>more complex</em> than what you are being asked to implement.  A simpler version of this algorithm was presented in class.</li>
+</ul>
+
+<h2 id="overview-of-starter-code">Overview of starter code</h2>
+
+<p>Files you are asked to edit:</p>
+<ul>
+  <li><code class="highlighter-rouge">Utils.java</code>: useful methods for manipulating sets that will eventually be used during frequent itemset mining</li>
+  <li><code class="highlighter-rouge">FrequentItemsetsMiner.java</code>: where all your frequent itemset mining code will live</li>
+</ul>
+
+<p>Files you may want to look at (but not edit):</p>
+<ul>
+  <li><code class="highlighter-rouge">Transactions.java</code>: stores a collection of <em>transactions</em></li>
+</ul>
+
+<p>You may want to check out the <code class="highlighter-rouge">FrequentItemsetsMiner.demo()</code> method.  This method starts by constructing a fictitious transaction dataset and eventually performs frequent itemset mining on it.  You may notice that the example dataset in this <code class="highlighter-rouge">demo</code> method matches the running example from the textbook chapter mentioned in the previous paragraph.  As you make progress on the lab, more and more of this method should run and produce the expected results.</p>
+
+<p>You should also check out <code class="highlighter-rouge">FrequentItemsetsMiner.executeSLOW()</code>.  This is a correct, but inefficient way of calcaluating frequent itemsets.  Once you complete task 1 below, this code should run!</p>
+
+<h2 id="tasks--milestones">Tasks &amp; Milestones</h2>
+
+<p>Your task is to implement the following methods.  See the javadocs for more information on each method.</p>
+
+<ol>
+  <li>Utils.java: <code class="highlighter-rouge">allSubsets</code> (check your work by running <code class="highlighter-rouge">Utils.main</code>)</li>
+  <li>Utils.java: <code class="highlighter-rouge">allSubsetsOfSize</code> (again, run <code class="highlighter-rouge">Utils.main</code>)</li>
+  <li>FrequentItemsetsMiner.java: <code class="highlighter-rouge">frequentItems</code></li>
+  <li>FrequentItemsetsMiner.java: <code class="highlighter-rouge">generateCandidates</code></li>
+  <li>FrequentItemsetsMiner.java: <code class="highlighter-rouge">execute</code></li>
+</ol>
+
+<p>To keep pace, your goal should be to finish 1 and 2 before the second lab.  You may need to work outside of lab to make this happen.  During the second lab session, you can work on 3-5.  Again, you may not finish all of these during the two hour lab and may need to work outside of lab to complete it.</p>
+
+<h2 id="challenge-problems">Challenge problems</h2>
+
+<p>Parts marked as <em>challenge problems</em> should be considered optional.  You are encouraged to complete these if you have finished the assignment and want to explore a little more deeply.  Completion of challenge problems contributes a small amount of extra credit (see syllabus for details).</p>
+
+<p>The challenge problem for this lab is to read the <a href="https://www-users.cs.umn.edu/~kumar001/dmbook/ch6.pdf">chapter</a> from the data mining textbook and modify your code in some way to make it more efficient.  If you do this, please turn this as a <em>separate</em> class file, such as <code class="highlighter-rouge">FrequentItemsetsMinerChallenge</code>.  I will grade your <code class="highlighter-rouge">FrequentItemsetsMiner</code> for the lab and grade it and <em>then</em> look at <code class="highlighter-rouge">FrequentItemsetsMinerChallenge</code> to award challenge problem extra credit.</p>
+
+    </div>
+  </div>
+</div>
+<!-- empty footer -->
+<footer class="footer">
+  <div class="container">
+    <p>This site built using
+    <a href="https://jekyllrb.com/">Jekyll</a>,
+    <a href="https://getbootstrap.com/">Bootstrap</a>,
+    and <a href="https://bootswatch.com/">Bootswatch</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

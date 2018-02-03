@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Sat Solver</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
+</head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">CS 290</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          
+        <li>
+          <a href="/">Home</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/schedule.html">Schedule</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/psets/">Problem sets</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/labs/">Labs</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/syllabus.pdf">Syllabus (pdf)</a>
+        </li>
+          
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://cs.colgate.edu/cs">CS@Colgate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <!-- 
+[files](lab.zip) -->
+
+<h1 id="lab-2-sat-solver">Lab 2: Sat Solver</h1>
+
+<ul>
+  <li>Course: COSC 290 Discrete Structures Spring 2018</li>
+  <li>Instructor: Michael Hay</li>
+  <li>Assignment: Lab 2</li>
+  <li>Due date: Sat, Jan 27 at 11:55 PM</li>
+  <li>Starter code: <a href="/labs/lab2.zip">available for download</a></li>
+</ul>
+
+<h2 id="basic-setup">Basic setup</h2>
+
+<p>See the instructions in Lab 1 for setting up the work environment, compiling code, running code, saving your work, and turning in your work.</p>
+
+<h2 id="background">Background</h2>
+
+<p>XXX explain the following things:</p>
+
+<ul>
+  <li>problem</li>
+  <li>real-world applications</li>
+  <li>reading: 3.3.3 and CS Connection, p. 326 (which talks about P vs. NP)</li>
+  <li>DPLL pseudocode</li>
+  <li>model</li>
+  <li>experiment</li>
+  <li>science paper(s)</li>
+  <li>experiment spec: what should the experiment do?</li>
+  <li>heuristics: pure and unit, role of model</li>
+</ul>
+
+<h2 id="your-tasks">Your tasks</h2>
+
+<p>Your <em>primary</em> task is to implement the <code class="highlighter-rouge">SatSolver</code> and in particular the <code class="highlighter-rouge">isSatisfiableHelper()</code> method.  Once it’s completed, you can experiment with it in <code class="highlighter-rouge">ExperimentMain</code> and then enhance it using the.  However, there are several other classes that are provided and some of them have methods that you are asked to fill in.  These additional classes</p>
+
+<h2 id="suggested-plan-of-attack">Suggested plan of attack</h2>
+
+<p>I suggest you complete tasks in the following order.  As you go, think about how what you’re coding might be useful for the <code class="highlighter-rouge">SatSolver</code></p>
+
+<ol>
+  <li>Warmup: get familiar with the code and implement the following helper methods: <code class="highlighter-rouge">Literal.toString()</code>, <code class="highlighter-rouge">Clause.getVariables()</code>, <code class="highlighter-rouge">Clause.getPositiveVariables</code>, <code class="highlighter-rouge">Clause.getNegativeVariables</code>, and <code class="highlighter-rouge">CNFF.getVariables()</code>.</li>
+  <li>Implement <code class="highlighter-rouge">Model.isTrue()</code> and <code class="highlighter-rouge">Model.isFalse()</code>.  These should come in handy in <code class="highlighter-rouge">isSatisfiableHelper</code>.</li>
+  <li><code class="highlighter-rouge">SatSolver.isSatisfiableHelper()</code>.  Implement a “simple” version that does not prioritize pure variables and variables in unit clauses.</li>
+  <li>Replicate the experiment described above in <code class="highlighter-rouge">ExperimentMain</code> using the “simple version.”</li>
+  <li>Now write the code to look for unit clauses and pure variables <code class="highlighter-rouge">FormulaAnalyzers.findUnitClauseVariables</code> and <code class="highlighter-rouge">FormulaAnalyzers.findPureVariables</code>.</li>
+  <li>Incorporate the <code class="highlighter-rouge">FormulaAnalyzers</code> methods into <code class="highlighter-rouge">SatSolver.isSatisfiableHelper()</code></li>
+</ol>
+
+<p>The following classes are provided: <code class="highlighter-rouge">FormulaGenerator</code>, <code class="highlighter-rouge">Pair</code>, <code class="highlighter-rouge">Variable</code>.  You should read them but you should not need to modify them.</p>
+
+<p>XXX add challenge problem? further optimizations, super-challenge problem, present a poly time algorithm XXX</p>
+
+    </div>
+  </div>
+</div>
+<!-- empty footer -->
+<footer class="footer">
+  <div class="container">
+    <p>This site built using
+    <a href="https://jekyllrb.com/">Jekyll</a>,
+    <a href="https://getbootstrap.com/">Bootstrap</a>,
+    and <a href="https://bootswatch.com/">Bootswatch</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
