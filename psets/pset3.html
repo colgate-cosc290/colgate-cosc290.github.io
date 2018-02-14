@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" href="/favicon.ico" type="image/ico" />
 
-  <title>Problem sets</title>
+  <title>Problem Set 3</title>
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,6 +34,24 @@
 </script> -->
 <!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
 </head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 <body>
 <nav class="navbar navbar-default">
@@ -96,24 +114,60 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-    
-<h1 id="problem-sets">Problem Sets</h1>
+    <h1 id="problem-set-3">Problem Set 3</h1>
 
-<ol>
-  <li>
-    <p><a href="/psets/pset0.html">Problem Set 0</a> (Due: Wed, Jan 24 at 08:20 AM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset1.html">Problem Set 1</a> (Due: Tue, Jan 30 at 11:55 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset2.html">Problem Set 2</a> (Due: Sun, Feb 11 at 06:00 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset3.html">Problem Set 3</a> (Due: Wed, Feb 21 at 11:59 PM)</p>
-  </li>
-</ol>
+<h2 id="instructions">Instructions</h2>
 
+<p>Please see the instructions from the previous problem set.</p>
+
+<h3 id="template">Template</h3>
+
+<p>Please appropriately adapt the <a href="https://www.overleaf.com/read/qhpfdrcwysmb">template</a> from the previous problem set.  (When the link opens, click “create clone”.)</p>
+
+<h3 id="additional-latex-tips">Additional LaTeX Tips</h3>
+
+<p>The first problem set has links to numerous LaTeX resources.  Here is another <a href="http://www.countablethoughts.com/documents/HowToLaTeX.pdf">tutorial</a> that you might find useful.</p>
+
+<p>Since this problem set is on predicate logic, here is a quick cheat sheet for logic symbols:</p>
+
+<p>Propositional logic:</p>
+
+<ul>
+  <li>Not: $\lnot$ is <code class="highlighter-rouge">\lnot</code></li>
+  <li>And: $\land$ is <code class="highlighter-rouge">\land</code></li>
+  <li>Or: $\lor$ is <code class="highlighter-rouge">\lor</code></li>
+  <li>Xor: $\oplus$ is <code class="highlighter-rouge">\oplus</code></li>
+  <li>If: $\implies$ is <code class="highlighter-rouge">\implies</code></li>
+  <li>Iff: $\iff$ is <code class="highlighter-rouge">\iff</code></li>
+  <li>Nand: $\uparrow$ is <code class="highlighter-rouge">\uparrow</code></li>
+</ul>
+
+<p>Quantifiers:</p>
+
+<ul>
+  <li>Universal quantification: $\forall x: P(x)$ is <code class="highlighter-rouge">\forall x: P(x)</code></li>
+  <li>Existential quantification: $\exists x: P(x)$ is <code class="highlighter-rouge">\exists x: P(x)</code></li>
+</ul>
+
+<p>Parentheses:</p>
+
+<ul>
+  <li>LaTeX can automatically increase the size of brackets/parentheses around expressions: use <code class="highlighter-rouge">\left(</code> to make a left parenthesis that will automatically grow and  <code class="highlighter-rouge">\right)</code> for a right parenthesis.</li>
+</ul>
+
+<h2 id="problems">Problems</h2>
+
+<p>Write up answers to the following problems.  When using the LaTeX template, please make sure that each problem (problems 1, 2, 3, and 4) is given its own <code class="highlighter-rouge">\section</code>.  This ensures that each problem starts on a new page.  Each <em>part</em> of a problem (problem 1.1, 1.2, etc.) should be given its own <code class="highlighter-rouge">\subsection</code>.</p>
+
+<h3 id="problem-1-translating-natural-language-into-logic">Problem 1: Translating natural language into logic</h3>
+
+<p>The text says to use the predicate $\text{scheduledAt}$.  You are permitted to shorten this to simply $\text{At}$.</p>
+
+<p>1.1 - 1.8. DLN 3.145 - 3.152</p>
+
+<h3 id="problem-2-translating-code-snippets-into-logic">Problem 2: Translating code snippets into logic</h3>
+
+<p>2.1 - 2.6. DLN 3.191 - 3.196</p>
 
     </div>
   </div>
