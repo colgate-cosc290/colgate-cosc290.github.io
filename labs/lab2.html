@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" href="/favicon.ico" type="image/ico" />
 
-  <title>Sat Solver</title>
+  <title>Lab 2: Sat Solver</title>
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -114,59 +114,125 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-    <!-- 
-[files](lab.zip) -->
-
-<h1 id="lab-2-sat-solver">Lab 2: Sat Solver</h1>
+    <h1 id="lab-2-sat-solver">Lab 2: Sat Solver</h1>
 
 <ul>
   <li>Course: COSC 290 Discrete Structures Spring 2018</li>
   <li>Instructor: Michael Hay</li>
   <li>Assignment: Lab 2</li>
-  <li>Due date: Sat, Jan 27 at 11:55 PM</li>
-  <li>Starter code: <a href="/labs/lab2.zip">available for download</a></li>
+  <li>Due: Sun, Mar 11 at 11:59 PM (follow the same  instructions as for the previous lab)</li>
+  <li>Starter code: <a href="lab2.zip">lab2.zip</a></li>
 </ul>
+
+<h2 id="instructions">Instructions</h2>
 
 <h2 id="basic-setup">Basic setup</h2>
 
-<p>See the instructions in Lab 1 for setting up the work environment, compiling code, running code, saving your work, and turning in your work.</p>
+<p>See the instructions in Lab 1 for setting up the work environment, compiling code, running code, saving your work, and turning in your work.  A few quick clarifications.</p>
+
+<p><strong>Compiling your code</strong> To run your code, you can use the command line.</p>
+
+<p>Change to the directory where the files are located. For me, they can be found in my <code class="highlighter-rouge">lab2</code> folder, inside my <code class="highlighter-rouge">cosc290</code> which is on my Desktop:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /Users/mhay/Desktop/cosc290/lab2/
+</code></pre></div></div>
+
+<p>(you will obviously want to specify a different path as <code class="highlighter-rouge">mhay</code> is my username).</p>
+
+<p>Once you have navigated to the directory that contains your code, you can compile your code by typing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac edu/colgate/cosc290/satsolver/*java
+</code></pre></div></div>
+
+<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of the class that contains a <code class="highlighter-rouge">main</code> method.  For lab 2, you can type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java edu.colgate.cosc290.satsolver.SatSolver
+</code></pre></div></div>
+
+<p>And you should see something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Exception in thread "main" java.lang.UnsupportedOperationException: implement me!
+	at edu.colgate.cosc290.satsolver.CNFF.getVariables(CNFF.java:36)
+	at edu.colgate.cosc290.satsolver.SatSolver.isSatisfiable(SatSolver.java:44)
+	at edu.colgate.cosc290.satsolver.SatSolver.main(SatSolver.java:66)
+</code></pre></div></div>
 
 <h2 id="background">Background</h2>
 
-<p>XXX explain the following things:</p>
+<p>In this lab, you are asked to implement an algorithm that takes as input a proposition that is written in Conjunctive Normal Form (CNF) and returns true if the formula has a satisfying assignment and false if the formula is unsatisfiable.</p>
 
-<ul>
-  <li>problem</li>
-  <li>real-world applications</li>
-  <li>reading: 3.3.3 and CS Connection, p. 326 (which talks about P vs. NP)</li>
-  <li>DPLL pseudocode</li>
-  <li>model</li>
-  <li>experiment</li>
-  <li>science paper(s)</li>
-  <li>experiment spec: what should the experiment do?</li>
-  <li>heuristics: pure and unit, role of model</li>
-</ul>
+<p>This is a <strong>very</strong> important problem, as discussed in the reading (see Ch. 3.3.3 and the “CS Connection” on p. 326).  In fact, you might say this is <em>the most important problem in all of computer science</em>.  Many real-world problems can cast as CNF satisfiability problems.  For example, it is used to <a href="http://www.cs.swan.ac.uk/~csmarkus/ProcessesAndData/Papers/james09b.pdf">check Paris Metro railway control system for bugs</a>.</p>
+
+<p>Here’s a high level description of the algorithm you should implement.  First, you maintain a <em>model</em>, which is a partial assignment of variables to truth values.  Initially, the model is empty, meaning no variable has been assigned a truth value.  As the algorithm progresses, variables are assigned to truth values and the model is udpated accordingly.  (You can think of the model as a dictionary (or map) that maps a variable name to a boolean (<code class="highlighter-rouge">true</code> or <code class="highlighter-rouge">false</code>).) If the formula evaluates to true under the model, then you have found a <strong>satisfying assignment</strong>, and the algorithm should return true.</p>
+
+<p>Note that it’s not necessary to assign <em>every</em> variable a value to determine satisfiability.  For example, when $p$ is true, $(p \lor q) \land (p \lor r)$ is satisfiable regardless of how $q$ or $r$ are assigned.  Another example, when $p$ is false, $(p \lor q) \land (p \lor \lnot q) \land (q \lor r) \land (q \lor s)$ is unsatisfiable regardless of how $q$, $r$, or $s$ are assigned.</p>
+
+<p>One approach to solving this problem is to use <em>recursion</em>.  The basic idea is this: suppose $p$ is a variable in the formula.  Let’s try setting $p$ to true and seeing if the formula is satisfiable.
+Note that by assigning $p$ to true, we have made the problem “smaller”: there is one less variable to consider.  Furthermore, when $p$ is true, every clause that contains $p$ is automatically true.  Thus, the problem may be even smaller because we may have fewer clauses to check.  After we assign $p$ to true, we can make a recursive call.  If assigning $p$ to true does not yield a satisfying assignment, then we set $p$ to false and see if it’s satisfiable (with another recursive call).  If we try setting $p$ to both true and false, and neither yields a satisfying assignment, then the formula <em>must</em> be unsatisfiable.</p>
+
+<p>Here is a pseudocode description of the recursive algorithm:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isSat(formula, model):
+  if formula evaluates to true given model's variable assignment:
+    return true
+  if formula evaluates to false given model's variable assignment:
+    return false
+
+  var = choose an unassigned variable
+  for val in {true, false}:
+    update model, assigning var to val
+    if (isSat(formula, model))
+      return true
+    update model, unassigning var
+
+  return false  // neither assignment worked, formula is unsatisfiable
+</code></pre></div></div>
+
+<p>In 1994, researchers made two important discoveries, which were <a href="http://science.sciencemag.org/content/264/5163/1297">reported</a> <a href="http://www.jstor.org/stable/2884074?pq-origsite=360link&amp;seq=1#page_scan_tab_contents">in Science</a>, the most prestiguous venue for scientific research.  First, they found that the likelihood that a formula is satisfiable depends on the ratio between number of clauses and number of variables.  When the ratio is less than 4, almost all formulas are satisfiable; when the ration is above 5, almost all are unsatisfiable.  Second, they found that the hardest formulas to check lie between 4 and 5.  Understanding “<a href="https://www.ijcai.org/Proceedings/91-1/Papers/052.pdf">where the hard problems are</a>” is of great theoretical and practical value.</p>
+
+<p>Part of this lab is to approximately replicate their experiment.  (The second discovery can only be verified with the challenge problem.)  Here are the results from my implementation.</p>
+
+<p><img src="proportion.png" alt="Figure of results on satisfiability" /></p>
+
+<p><img src="cost.png" alt="Figure of results on search cost" /></p>
+
+<h3 id="enhancements-to-the-algorithm">Enhancements to the algorithm</h3>
+
+<p>If you complete the optional challenge problem, there are two enhancements to the algorithm.</p>
+
+<p>The first is to always choose pure variables first.  A pure variable is one that always appears as a positive, or always appears negative.  Pure variables are easy: if the variable is positive, it must be assigned true if the formula is satisfiable; if the variable is always negative, it must be assigned false.  Note that a variable can become pure under a model:  For example, in the formula $(p \lor q) \land (p \lor r) \land (\lnot p \lor s)$ when $s$ is true, then we can ignore the last clause ($s$ being True, makes the last clause true) and so $p$ becomes pure and it must be assigned to true.</p>
+
+<p>The second is to find unit clause variables.  A unit clause variable is a variable that appears by itself in a clause.  For example, in the formula, $(\lnot p) \land (p \lor q)$, variable $p$ is in a unit clause.  Like with pure variables, a variable in a unit clause must be assigned a certain truth value (in the example $p$ must be false).  Also like pure variables, a clause can become a unit clause under a model.  For example if the formula is $(p \lor q \lor \lnot r)$ and $q$ is assigned false and $r$ is assigned true, then $p$ becomes a unit clause variable.</p>
+
+<p>Unit clause variables should be considered after all pure variables have been checked.</p>
 
 <h2 id="your-tasks">Your tasks</h2>
 
-<p>Your <em>primary</em> task is to implement the <code class="highlighter-rouge">SatSolver</code> and in particular the <code class="highlighter-rouge">isSatisfiableHelper()</code> method.  Once it’s completed, you can experiment with it in <code class="highlighter-rouge">ExperimentMain</code> and then enhance it using the.  However, there are several other classes that are provided and some of them have methods that you are asked to fill in.  These additional classes</p>
+<p>Your <em>primary</em> task is to implement the <code class="highlighter-rouge">SatSolver</code> and in particular the <code class="highlighter-rouge">isSatisfiableHelper()</code> method.  Once it’s completed, you can experiment with it in <code class="highlighter-rouge">ExperimentMain</code> and then, as part of an optional challenge problem, enhance it using the <code class="highlighter-rouge">FormulaAnalyzers</code>.</p>
 
-<h2 id="suggested-plan-of-attack">Suggested plan of attack</h2>
+<p>While your main task is <code class="highlighter-rouge">SatSolver</code>, there are several other classes that are provided and some of them have methods that you are asked to fill in.  An approach to completing the lab is suggested below.</p>
+
+<h3 id="suggested-plan-of-attack">Suggested plan of attack</h3>
 
 <p>I suggest you complete tasks in the following order.  As you go, think about how what you’re coding might be useful for the <code class="highlighter-rouge">SatSolver</code></p>
 
 <ol>
-  <li>Warmup: get familiar with the code and implement the following helper methods: <code class="highlighter-rouge">Literal.toString()</code>, <code class="highlighter-rouge">Clause.getVariables()</code>, <code class="highlighter-rouge">Clause.getPositiveVariables</code>, <code class="highlighter-rouge">Clause.getNegativeVariables</code>, and <code class="highlighter-rouge">CNFF.getVariables()</code>.</li>
-  <li>Implement <code class="highlighter-rouge">Model.isTrue()</code> and <code class="highlighter-rouge">Model.isFalse()</code>.  These should come in handy in <code class="highlighter-rouge">isSatisfiableHelper</code>.</li>
-  <li><code class="highlighter-rouge">SatSolver.isSatisfiableHelper()</code>.  Implement a “simple” version that does not prioritize pure variables and variables in unit clauses.</li>
+  <li>Warmup: get familiar with the code and implement the following helper methods: <code class="highlighter-rouge">Literal.toString</code>, <code class="highlighter-rouge">Clause.getVariables</code>, <code class="highlighter-rouge">Clause.getPositiveVariables</code>, <code class="highlighter-rouge">Clause.getNegativeVariables</code>, and <code class="highlighter-rouge">CNFF.getVariables</code>.  Your implementation should be DRY (Don’t Repeat Yourself).  Create helper methods as appropriate.</li>
+  <li>Implement <code class="highlighter-rouge">Model.isTrue</code> and <code class="highlighter-rouge">Model.isFalse</code>.  These should come in handy in <code class="highlighter-rouge">isSatisfiableHelper</code>.</li>
+  <li><code class="highlighter-rouge">SatSolver.isSatisfiableHelper</code>.  Implement a “simple” version that does not prioritize pure variables and variables in unit clauses.</li>
   <li>Replicate the experiment described above in <code class="highlighter-rouge">ExperimentMain</code> using the “simple version.”</li>
-  <li>Now write the code to look for unit clauses and pure variables <code class="highlighter-rouge">FormulaAnalyzers.findUnitClauseVariables</code> and <code class="highlighter-rouge">FormulaAnalyzers.findPureVariables</code>.</li>
-  <li>Incorporate the <code class="highlighter-rouge">FormulaAnalyzers</code> methods into <code class="highlighter-rouge">SatSolver.isSatisfiableHelper()</code></li>
+  <li>(optional challenge problem) Now write the code to look for unit clauses and pure variables <code class="highlighter-rouge">FormulaAnalyzers.findUnitClauseVariables</code> and <code class="highlighter-rouge">FormulaAnalyzers.findPureVariables</code>.</li>
+  <li>(optional challenge problem)Incorporate the <code class="highlighter-rouge">FormulaAnalyzers</code> methods into <code class="highlighter-rouge">SatSolver.isSatisfiableHelper</code></li>
+  <li>(optional challenge problem) Update <code class="highlighter-rouge">ExperimentMain</code> so the <code class="highlighter-rouge">SatSolver</code> is called with the unit clause and pure symbol optimizations.</li>
 </ol>
 
 <p>The following classes are provided: <code class="highlighter-rouge">FormulaGenerator</code>, <code class="highlighter-rouge">Pair</code>, <code class="highlighter-rouge">Variable</code>.  You should read them but you should not need to modify them.</p>
 
-<p>XXX add challenge problem? further optimizations, super-challenge problem, present a poly time algorithm XXX</p>
+<h3 id="challenge-problems">Challenge problems</h3>
+
+<p>The challenge problems are shown above.</p>
+
+<p>Here’s an additional challenge problem, worth a bit more extra credit. The task is to design and implement an <em>efficient</em> algoritm for sat solving.  By efficient, I mean that the runtime is proportional to some function that is polynomial in the size of the input.  If you complete this, and can prove that the algorithm is correct and that the runtime is polynomial, you will be rewarded with $1 million.</p>
 
     </div>
   </div>
