@@ -141,10 +141,10 @@
 
 <p>Once you have navigated to the directory that contains your code, you can compile your code by typing:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac edu/colgate/cosc290/argchecker/*java
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac edu/colgate/cosc290/logic/*java
 </code></pre></div></div>
 
-<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of the class that contains a <code class="highlighter-rouge">main</code> method.  For example, in lab 3 the <code class="highlighter-rouge">ArgumentMain</code> class has a main method.  To run that main method, you can type:</p>
+<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of the class that contains a <code class="highlighter-rouge">main</code> method.  For example, in lab 3 the <code class="highlighter-rouge">LogicMain</code> class has a main method.  To run that main method, you can type:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java edu.colgate.cosc290.logic.LogicMain
 </code></pre></div></div>
@@ -161,7 +161,7 @@
 
 <p><strong>Why is this important?</strong>  In the previous lab, we saw the value of writing propositions in CNF.  It’s valuable because we can design algorithms that are specialized for the conjunctive normal form (e.g., SatSolver).  This lab has practical value because now we can take anything expressed in propositional logic – e.g, the <a href="http://www.cs.swan.ac.uk/~csmarkus/ProcessesAndData/Papers/james09b.pdf">rules of the Paris Metro railway control system</a> – and convert it into CNF for further processing.</p>
 
-<p><strong>Java representation of logical propositions</strong>. Similar what is described in the textbook (Ch 5.4), propositions are represented using a recursively defined structure (see the <code class="highlighter-rouge">Proposition</code> class and its subclasses).  The structure forms a binary tree.  Internal nodes represent logical operations – e.g., the proposition $\phi := \alpha \land \beta$ is represented as a binary tree where the root of the tree represents the AND and the two subtrees are the propositions $\alpha$ and $\beta$.  The leaves of the tree are atomic propositions – i.e., they are variables such as $p$, $q$, $r$, etc.</p>
+<p><strong>Java representation of logical propositions</strong>. Similar what is described in the textbook (Ch 5.4), propositions are represented using a recursively defined structure (see the <code class="highlighter-rouge">Proposition</code> class and its subclasses).  The structure forms a binary tree.  Internal nodes represent logical operations – e.g., the proposition $\varphi := \alpha \land \beta$ is represented as a binary tree where the root of the tree represents the AND and the two subtrees are the propositions $\alpha$ and $\beta$.  The leaves of the tree are atomic propositions – i.e., they are variables such as $p$, $q$, $r$, etc.</p>
 
 <p><strong>Converting to CNF</strong>. Transforming a proposition to CNF is done in stages.  Each stage takes propostion and recursively manipulates it, producing a new proposition that is logically equivalent to the input proposition but in a desired form.</p>
 
