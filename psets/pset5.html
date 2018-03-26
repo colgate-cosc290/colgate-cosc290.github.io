@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" href="/favicon.ico" type="image/ico" />
 
-  <title>Problem sets</title>
+  <title>Problem Set 5</title>
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,6 +34,24 @@
 </script> -->
 <!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
 </head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 <body>
 <nav class="navbar navbar-default">
@@ -96,30 +114,33 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-    
-<h1 id="problem-sets">Problem Sets</h1>
+    <h1 id="problem-set-5">Problem Set 5</h1>
+
+<h2 id="instructions">Instructions</h2>
+
+<p>Please answer the problems listed below.  Be sure to use and adapte the provided template.</p>
+
+<p>Here is a <a href="https://www.overleaf.com/read/rbxmbgtwxgqh">template</a>.  (When the link opens, click “create clone”.)</p>
+
+<p>Note: the above template has an <strong><a href="https://www.overleaf.com/read/rbxmbgtwxgqh">example proof</a></strong>.  This not only shows an example of how an induction proof can be structured, but by providing the LaTeX source, you can copy parts as appropriate for your proofs. In particular, please note some of the <em>basic formatting</em> (such as <strong>bold</strong> text) and how  multi-line math equations can be formatted (using <code class="highlighter-rouge">\begin{align*}...\end{align*}</code>).</p>
+
+<h2 id="problems">Problems</h2>
+
+<p>Write out answers for the following problems.</p>
 
 <ol>
   <li>
-    <p><a href="/psets/pset0.html">Problem Set 0</a> (Due: Wed, Jan 24 at 08:20 AM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset1.html">Problem Set 1</a> (Due: Tue, Jan 30 at 11:55 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset2.html">Problem Set 2</a> (Due: Sun, Feb 11 at 06:00 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset3.html">Problem Set 3</a> (Due: Wed, Feb 21 at 11:59 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset4.html">Problem Set 4</a> (Due: Sun, Mar 18 at 11:59 PM)</p>
-  </li>
-  <li>
-    <p><a href="/psets/pset5.html">Problem Set 5</a> (Due: Sun, Mar 18 at 11:59 PM)</p>
-  </li>
-</ol>
+    <p>Let $F_n$ denote the $n^{th}$ number in the Fibonacci sequence.  The Fibonacci sequence is defined recursively as $F_0 = 0$, $F_1 = 1$, and for $n \geq 2$, $F_n = F_{n-1} + F_{n-2}$.</p>
 
+    <p>Let $G_n$ be defined recursively as $G_{-1} = 0$ and $G_0 = 1$ and for $n \geq 1$, $G_n = G_{n-1} + G_{n-2} + 1$.  Prove that for all $n \geq -1$, $G_n = F_{n+3} - 1$.</p>
+
+    <p>In your proof, be sure to clearly define a <em>predicate</em> $P(n)$.  See the example proof (as well as many other examples in the textbook and from class).</p>
+  </li>
+  <li>Prove that for all $h \geq 0$, $G_h \geq 2^{h/2}$.  Again, you should have a clearly defined predicate $P(n)$.  (If you wish, you could name this one $P_2$ to avoid confusion witht he predicate from the first problem.)</li>
+  <li>A binary tree $T$ is <em>height balanced</em> if for <em>any node in the tree</em>, the height of the left subtree and the height of the right subtree can differ by at most 1. When a tree is height balanced, we can derive a <em>lower bound</em> on the number of nodes.  Prove this claim: if binary tree $T$ is height-balanced, $nodes(T) \geq G_{h(T)}$.  (In your proof, you are free to use the following fact, if $T$ is height balanced, then any subtree of $T$ is also height balanced.)</li>
+  <li>Prove that the <em>height balanced</em> criteria is critical in the previous claim.  In other words, consider the following claim:  for any binary tree $T$, $nodes(T) \geq G_{h(T)}$.  Prove that this claim is false.</li>
+  <li>Prove that a non-empty height balanced tree with $n$ nodes has height at most $2 \log_2 n$.  (This is property turns out the useful in practice: for example, if we can design a <em>height balanced</em> binary search tree, then this means any item can be found in at most $2\log n$ steps, which is a small number even when $n$ is large.)  Hint: you can show this combining results you’ve already proven.</li>
+</ol>
 
     </div>
   </div>
