@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" type="image/ico" />
+
+  <title>Lab 4: Transitive Closure</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<!-- <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
+</head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">CS 290</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          
+        <li>
+          <a href="/">Home</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/schedule.html">Schedule</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/psets/">Problem sets</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/labs/">Labs</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/syllabus.pdf">Syllabus (pdf)</a>
+        </li>
+          
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://cs.colgate.edu/cs">CS@Colgate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h1 id="lab-4-relations--transitive-closure">Lab 4: Relations &amp; Transitive Closure</h1>
+
+<ul>
+  <li>Course: COSC 290 Discrete Structures Spring 2018</li>
+  <li>Instructor: Michael Hay</li>
+  <li>Assignment: Lab 4</li>
+  <li>Due: Mon, Apr 16 at 11:59 PM (follow the same  instructions as for the previous lab)</li>
+  <li>Starter code: <a href="lab4.zip">lab4.zip</a></li>
+</ul>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="basic-setup">Basic setup</h3>
+
+<p>See the instructions in Lab 1 for setting up the work environment, compiling code, running code, saving your work, and turning in your work.  A few quick clarifications.</p>
+
+<p><strong>Compiling your code</strong> To run your code, you can use the command line.</p>
+
+<p>Change to the directory where the files are located. For me, they can be found in my <code class="highlighter-rouge">lab4</code> folder, inside my <code class="highlighter-rouge">cosc290</code> which is on my Desktop:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /Users/mhay/Desktop/cosc290/lab4/
+</code></pre></div></div>
+
+<p>(you will obviously want to specify a different path as <code class="highlighter-rouge">mhay</code> is my username).</p>
+
+<p>Once you have navigated to the directory that contains your code, you can compile your code by typing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac -Xlint:unchecked edu/colgate/cosc290/closure/*java
+</code></pre></div></div>
+
+<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of a class that contains a <code class="highlighter-rouge">main</code> method.  For example, in lab4 the <code class="highlighter-rouge">CompareAlgorithms</code> class has a main method.  To run that main method, you can type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java edu.colgate.cosc290.closure.CompareAlgorithms
+</code></pre></div></div>
+
+<p>And you should see something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Exception in thread "main" java.lang.UnsupportedOperationException: implement me!
+	at edu.colgate.cosc290.closure.CompareAlgorithms.main(CompareAlgorithms.java:17)
+</code></pre></div></div>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>This lab is about the composition of relations and about Warshall relations for computing transitive closures.</p>
+
+<h4 id="preliminaries">Preliminaries</h4>
+
+<p>Let $A := \{a_1, a_2, \ldots, a_n\}$ be a finite set of cardinality $n$.</p>
+
+<p>Let $R \subseteq A \times A$ be a binary relation on $A$.  The <em>transitive closure</em> of $R$ is a relation $R^{+} \supseteq R$ that contains the minimum number of additional elements of $A \times A$ required to make the relation transitive.</p>
+
+<p>For finite sets $A$,
+<script type="math/tex">{R^+} = R \cup R^2 \cup R^3 \cup \cdots \cup R^n</script>
+where $n = |A|$.  Recall from the textbook that $R^k := R \circ R \circ \cdots \circ R$ is result of composing $R$ with itself $k-1$ times. In other words, $R^{+}$ is the set of pairs that be arrived at through repeated application of the composition operator.  An alternative way to compute $R^{+}$ is thus:</p>
+<ul>
+  <li>initialize $T := R$</li>
+  <li>update $T$ through composition with $R$: $T := T \cup (R \circ T)$</li>
+</ul>
+
+<p>The update step needs to be repeated at most $n-1$ times.  In other words, $R^+$ can be computed using $n-1$ composition operations and $n-1$ unions.  Either of the above descriptions offers a correct but inefficient solution.</p>
+
+<p>There is a more efficient way based on Warshall relations.</p>
+
+<h4 id="warshall-relations">Warshall relations</h4>
+
+<p>Consider the following definition of a sequences of relations $W_k$ for $k := 0..n$:</p>
+
+<ul>
+  <li>for $k = 0$, $W_0 := R$</li>
+  <li>for $1 \leq k \leq n$, $W_k$ is a relation on $A$ such that $\langle a_i, a_j \rangle \in W_k$ iff there is a sequence of relationships in $R$ connecting $a_i$ to $a_j$ using any subset of the elements $\{a_1, a_2, \ldots, a_k\}$ as intermediates.  (Note: if $\langle a_i, a_j \rangle \in R$, then $\langle a_i, a_j \rangle \in W_k$ because it uses the empty set of $\{a_1, a_2, \ldots, a_k\}$ as intermediates.)</li>
+</ul>
+
+<p><strong>Example</strong>: if $\langle a_i, a_2 \rangle \in R$ and $\langle a_2, a_5 \rangle \in R$ and $\langle a_5, a_j \rangle \in R$, then we could say that $\langle a_i , a_j \rangle \in W_5$ because only $a_2$ and $a_5$ need to be used as intermediates to get from $a_i$ to $a_j$ through a sequence of relationships in $R$.  However, suppose that $a_\ell$ and $a_m$ are only connected through $a_6$, then $\langle a_\ell, a_m \rangle \not \in W_5$ because it requires using $a_6$ as an intermediate.</p>
+
+<p>It’s important to note that the $k$ subscript on $W_k$ is <strong>not</strong> the length of the sequence connecting elements, but rather a restriction on which elements are used as intermediates.  Of course, such a sequence has length at most $k+2$ (including the endpoints).</p>
+
+<p>Note that $W_n = R^{+}$.  This is because $\langle a_i, a_j \rangle \in W_n$ whenever there is a path (using <em>any</em> intermediate elements) from $a_i$ to $a_j$, which is exactly the structure that a transitively closed relation should have.</p>
+
+<h3 id="overview-of-starter-code">Overview of Starter Code</h3>
+
+<p>You are expected to modify these files:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Relations.java</code> – where several static methods like compose, union, and transitive closure are defined but left for you to implement.  It also contains some useful debugging tools.</li>
+  <li><code class="highlighter-rouge">Warshall.java</code> – where you should implement a more efficient version of transitive closure based on Warshall relations</li>
+  <li><code class="highlighter-rouge">CompareAlgorithms.java</code> – where you should fill in the main method to empirically compare your transitive closure implementations on relations of increasingly larger size</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+
+<p>Implement the methods shown in the provided code.  At a high level, you are asked to implement transitive closure $R^+$ in two ways: one way is one of the inefficient ways and the other way should be based on Warshall relations. After you have two implementations, use the <code class="highlighter-rouge">CompareAlgorithms.main</code> method to compare their runtimes.</p>
+
+<p>Here’s a rough guide on how to proceed.</p>
+
+<ol>
+  <li>Browse the files, getting familiar with the code and and looking for “implement me!”, which is an indication that you are supposed to implement this function.</li>
+  <li>Implement <code class="highlighter-rouge">Relations.union</code>.  Create a main method and test it before moving on!</li>
+  <li>Implement <code class="highlighter-rouge">Relations.compose</code>.  Again, test it!</li>
+  <li>Implement <code class="highlighter-rouge">Relations.transitiveClosure</code> and test.</li>
+  <li>Implement <code class="highlighter-rouge">Warshall.transitiveClosure</code> and test.  <em>This is probably the hardest part of the whole lab.</em></li>
+  <li>Implement <code class="highlighter-rouge">CompareAlgorithms.main</code>.  See an example of the desired output below.</li>
+</ol>
+
+<p>The purpose of <code class="highlighter-rouge">CompareAlgorithms</code> is to compare the two version of transitive closure that you created.  Here’s an example of what a good main method would display.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Comparing runtime of two algorithms for transitive closure on a 'chain' relation on the set {1..n}.
+(Runtimes are reported in milliseconds.)
+n = 20 regular = 3 Warshall = 1
+n = 40 regular = 13 Warshall = 3
+n = 60 regular = 20 Warshall = 4
+n = 80 regular = 42 Warshall = 3
+n = 100 regular = 101 Warshall = 2
+n = 120 regular = 251 Warshall = 7
+n = 140 regular = 449 Warshall = 5
+n = 160 regular = 697 Warshall = 5
+n = 180 regular = 582 Warshall = 6
+n = 200 regular = 936 Warshall = 8
+</code></pre></div></div>
+
+<h4 id="implementation-details">Implementation details</h4>
+
+<p>In this lab, a binary relation is represented using a double array of booleans as follows.</p>
+
+<p>Recall that $A := \{ a_1, \ldots a_n \}$ and $R \subseteq A \times A$ is a relation on $A$.</p>
+
+<p>We represent a binary relation $R$ using a double array <code class="highlighter-rouge">double[][] R</code>, where <code class="highlighter-rouge">R[i][j] == true</code> means that $(a_{i+1}, a_{j+1}) \in R$, and <code class="highlighter-rouge">R[i][j] == false</code> means that $(a_{i+1}, a_{j+1}) \notin R$.  (Note there is an “off by one” thing going on here.  Our set starts couning elements at 1 but double arrays in Java are indexed starting at 0.)</p>
+
+<h3 id="milestones">Milestones</h3>
+
+<p>You should have a partially implementation of <code class="highlighter-rouge">Warshall.transitiveClosure</code> going into the second lab.</p>
+
+<h3 id="challenge-problem">Challenge problem</h3>
+
+<p>There is no specific challenge problem for this lab.  Feel free to get creative.</p>
+
+<h3 id="grading-guide">Grading guide</h3>
+
+<p>Please see the <a href="/labs/rubric.html">grading grading for labs</a>.</p>
+
+    </div>
+  </div>
+</div>
+<!-- empty footer -->
+<footer class="footer">
+  <div class="container">
+    <p>This site built using
+    <a href="https://jekyllrb.com/">Jekyll</a>,
+    <a href="https://getbootstrap.com/">Bootstrap</a>,
+    and <a href="https://bootswatch.com/">Bootswatch</a>.  The favicon is Pigeon by Brandon Kraeger from the <a href="https://thenounproject.com">Noun Project</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
