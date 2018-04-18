@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" type="image/ico" />
+
+  <title>Lab 5: Posets</title>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<!-- <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<!-- http://www.gastonsanchez.com/visually-enforced/opinion/2014/02/16/Mathjax-with-jekyll/ -->
+</head>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">CS 290</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+          
+        <li>
+          <a href="/">Home</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/schedule.html">Schedule</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/psets/">Problem sets</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/labs/">Labs</a>
+        </li>
+          
+        
+          
+        <li>
+          <a href="/syllabus.pdf">Syllabus (pdf)</a>
+        </li>
+          
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="http://cs.colgate.edu/cs">CS@Colgate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h1 id="lab-5-posets">Lab 5: Posets</h1>
+
+<ul>
+  <li>Course: COSC 290 Discrete Structures Spring 2018</li>
+  <li>Instructor: Michael Hay</li>
+  <li>Assignment: Lab 5</li>
+  <li>Due: Wed, May  2 at 11:59 PM (follow the same  instructions as for the previous lab)</li>
+  <li>Starter code: <a href="lab5.zip">lab5.zip</a></li>
+</ul>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="basic-setup">Basic setup</h3>
+
+<p>See the instructions in Lab 1 for setting up the work environment, compiling code, running code, saving your work, and turning in your work.  A few quick clarifications.</p>
+
+<p><strong>Compiling your code</strong> To run your code, you can use the command line.</p>
+
+<p>Change to the directory where the files are located. For me, they can be found in my <code class="highlighter-rouge">lab5</code> folder, inside my <code class="highlighter-rouge">cosc290</code> which is on my Desktop:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /Users/mhay/Desktop/cosc290/lab5/
+</code></pre></div></div>
+
+<p>(you will obviously want to specify a different path as <code class="highlighter-rouge">mhay</code> is my username).</p>
+
+<p>Once you have navigated to the directory that contains your code, you can compile your code by typing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ javac edu/colgate/cosc290/posets/*java
+</code></pre></div></div>
+
+<p><strong>Running your code</strong> If you are using the command line, you can execute your code by typing <code class="highlighter-rouge">java</code> followed by the fully-qualified name of the class that contains a <code class="highlighter-rouge">main</code> method.  For lab 2, you can type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java edu.colgate.cosc290.posets.Poset
+</code></pre></div></div>
+
+<p>And you should see something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Exception in thread "main" java.lang.UnsupportedOperationException: implement me!
+	at edu.colgate.cosc290.posets.Poset.&lt;init&gt;(Poset.java:25)
+	at edu.colgate.cosc290.posets.Poset.main(Poset.java:130)
+</code></pre></div></div>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>In class, we discussed the concept of a partial order.  We also discussed representing a partial order with a Hasse diagram.</p>
+
+<p>A set with a valid partial order is called a <em>partially ordered set</em>, or a <em>poset</em> for short. We will use $(P, \preceq)$ to denote a set of elements $P$ and a partial order relation $\preceq$ on $P$.</p>
+
+<h4 id="representing-posets-in-java">Representing posets in Java</h4>
+
+<p>One way to represent a poset $P$ in Java is by representing its Hasse diagram. We can do this by using a Map to represent the diagram’s adjacency list.</p>
+
+<p>Let <code class="highlighter-rouge">H</code> be a Map representing a Hasse diagram for $P$.  The keys of <code class="highlighter-rouge">H</code> are the elements of $P$.  The value associated with each key is a list of its <em>immediate successors</em>.</p>
+
+<p>The set of immediate successors of an element $a$ is:
+<script type="math/tex">\mathrm{succ}(a) = \{b \in P \ :\ b \neq a \mbox{ and } a \preceq b \mbox{ and } (\neg \exists c \in P - \{a,b\} : a \preceq c \preceq b)\}</script></p>
+
+<p>For example, on the set $P = {1, 2, 3, 4}$ with the usual partial order $\leq$ (“less than or equal to”), then $succ(2) = { 3 }$, i.e., the element 2 has one immediate successor and that is the element 3.</p>
+
+<p>The provided Poset class has a constructor that takes a java Map that represents <code class="highlighter-rouge">H</code>. You are responsible for implementing the constructor as well as the other methods defined in this class.  Your implementation will be evaluated for both correctness and efficiency (so think carefully about whether you are implementing each method as efficiently as possible).</p>
+
+<h4 id="important-implementation-detail">Important implementation detail</h4>
+
+<p>While a poset could be over an arbitrary set of elements (e.g., in class we constructed a poset over items on a “to do” list), the Java <code class="highlighter-rouge">Poset</code> class assumes that the elements of $P$ are the numbers $0$ to $n-1$ where $n$ is the size of the set.  The rationale is to simplify your implementation.  For example, you could create one or more arrays of size $n$ and use them to store various bits of information about each element of the set and then easily access the information with simple array indexing.</p>
+
+<h3 id="overview-of-starter-code">Overview of Starter Code</h3>
+
+<p>You are expected to modify these files:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Poset.java</code> – a class representing a partially ordered set</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+
+<h4 id="constructor-invert-hasse-diagram">Constructor: invert Hasse diagram</h4>
+
+<p>For some of these methods below, it will be more efficient to have access to the <em>inverted</em> Hasse diagram, where elements point to their precedessors rather than their successors.  In the constructor, in addition to storing some representation of <code class="highlighter-rouge">H</code>, you may also wish to create an additional representation of the inverted Hasse diagram, say <code class="highlighter-rouge">invH</code>.</p>
+
+<h4 id="minimal-maximal">Minimal, Maximal</h4>
+
+<p>Write two methods <code class="highlighter-rouge">minimal()</code> and <code class="highlighter-rouge">maximal()</code> that return the set of minimal and maximal elements of $P$, respectively.</p>
+
+<p>Recall that $x \in P$ is minimal if for all $y \in P - { x }$, $y \not\preceq x$.</p>
+
+<p>It might be helpful to write a helper function, <em>e.g.</em>, <code class="highlighter-rouge">minimal(Set&lt;Integer&gt; S)</code>, that finds the minimal elements of a subset $S \subseteq P$, and then call it with $S = P$ to get the answer for the whole poset.  You might be able to use these helper methods later.</p>
+
+<p>This task, and other tasks, are crying out for you to use the <strong>Don’t Repeat Yourself</strong> (DRY) principle.  Avoid writing duplicate code for tasks that are nearly identical.</p>
+
+<h4 id="minimum-maximum">Minimum, Maximum</h4>
+
+<p>Write two methods <code class="highlighter-rouge">minimum()</code> and <code class="highlighter-rouge">maximum()</code> that return the minimum and maximum element of $P$, respectively, or -1 if no such element exists.</p>
+
+<p>Recall that $x \in P$ is the minimum if for all $y \in P$, $x \preceq y$.</p>
+
+<p>As above, helper methods might be useful.</p>
+
+<h4 id="consistency-with-partial-order">Consistency with partial order</h4>
+
+<p>Write a function <code class="highlighter-rouge">consistent(List&lt;Integer&gt; totalOrder)</code> that takes as an additional parameter a list <code class="highlighter-rouge">totalOrder</code> representing a total order (an ordered sequence of the elements in $P$).  Return <code class="highlighter-rouge">true</code> if the order in <code class="highlighter-rouge">totalOrder</code> is consistent with the partial order and <code class="highlighter-rouge">false</code> otherwise.</p>
+
+<p>Recall that a total order $\preceq_{total}$ is consistent with a partial order $\preceq$ if $x \preceq y$ implies $x \preceq_{total} y$.</p>
+
+<h4 id="topological-order">Topological order</h4>
+
+<p>Write a function <code class="highlighter-rouge">topoSort()</code> that returns a list of all the elements in $P$ in an ordered sequence that is consistent with the partial order.</p>
+
+<h4 id="upper-and-lower-bounds">Upper and lower bounds</h4>
+
+<p>Let $S \subseteq P$.</p>
+
+<ul>
+  <li>$b \in P$ is an <em>upper bound</em> of $S$ iff $\forall\,a\in S: a \preceq b$.</li>
+  <li>$b \in P$ is a <em>lower bound</em> of $S$ iff $\forall\,a \in S: b \preceq a$.</li>
+</ul>
+
+<p>Note that the bounds themselves do not have to be in $S$.</p>
+
+<p>Implement the <code class="highlighter-rouge">lowerBound</code> and <code class="highlighter-rouge">upperBound</code> methods.</p>
+
+<h4 id="greatest-lower-and-least-upper-bounds">Greatest Lower and Least Upper Bounds</h4>
+
+<p>Let $S \subseteq P$.</p>
+
+<ul>
+  <li>$b \in P$ is a <em>least upper bound</em> of $S \subseteq P$ iff $b$ is an upper bound of $S$ and $b \preceq b’$ whenever $b’$ is an upper bound of $S$.</li>
+  <li>$b \in P$ is a <em>greatest lower bound</em> of $S \subseteq P$ iff $b$ is a lower bound of $S$ and $b’ \preceq b$ whenever $b’$ is a lower bound of $S$.</li>
+</ul>
+
+<p>Implement the <code class="highlighter-rouge">LUB</code> and <code class="highlighter-rouge">GLB</code> methods.</p>
+
+<h4 id="main-method">Main method</h4>
+
+<p>Implement a main method that demonstrates the correctness of your implemnetation.  Please be sure that when the main method is run, the output shown provides complete information to demonstrate correctness.</p>
+
+<h3 id="milestones">Milestones</h3>
+
+<p>Each group of methods is of roughly equal difficulty, so you can pace yourself accordingly.</p>
+
+<h3 id="challenge-problem-check-validity-of-the-hasse-diagram">Challenge problem: Check validity of the Hasse diagram</h3>
+
+<p>The constructor for the class now accepts the Hasse diagram as a parameter, but it’s possible that it’s not a valid Hasse diagram!</p>
+
+<p>Write a check that the Hasse diagram is valid, and throws an exception if it’s not.</p>
+
+    </div>
+  </div>
+</div>
+<!-- empty footer -->
+<footer class="footer">
+  <div class="container">
+    <p>This site built using
+    <a href="https://jekyllrb.com/">Jekyll</a>,
+    <a href="https://getbootstrap.com/">Bootstrap</a>,
+    and <a href="https://bootswatch.com/">Bootswatch</a>.  The favicon is Pigeon by Brandon Kraeger from the <a href="https://thenounproject.com">Noun Project</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
